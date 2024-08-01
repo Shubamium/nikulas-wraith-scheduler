@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     try {
       const result = await client.messages.create({
         body: message,
-        from: process.env.TWILLIO_NUM,
+        from: process.env.TWILIO_NUM,
         // messagingServiceSid: process.env.TWILIO_MSID,
         to: numbers[i],
         // from: process.env.TWILIO_NUM,
