@@ -17,3 +17,13 @@ a {
   color: inherit;
   text-decoration: none;
 }
+.btn {
+  cursor: pointer;
+  transition: all 200ms ease;
+  &:hover {
+    scale: 1.05;
+  }
+  &:active {
+    scale: 0.95;
+  }
+}
