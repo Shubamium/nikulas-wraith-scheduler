@@ -52,7 +52,7 @@ export async function POST(request: Request) {
   });
   const res = await req.json();
   console.log(res);
-  return Response.redirect("http://localhost:3000");
+  return Response.redirect(new URL("/", request.url));
   // return new Response("Called", {
   //   status: 200,
   // });
