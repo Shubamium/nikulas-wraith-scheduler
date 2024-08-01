@@ -11,13 +11,17 @@ export async function POST(request: Request) {
 
   const sids = [];
   for (let i = 0; i < numbers.length; i++) {
-    const result = await client.messages.create({
-      body: message,
-      to: numbers[i],
-      from: "+13203739054",
-    });
-    const res = result.sid;
-    sids.push(res);
+    try {
+      const result = await client.messages.create({
+        body: message,
+        to: numbers[i],
+        from: "+13203739054",
+      });
+      const res = result.sid;
+      sids.push(res);
+    } catch (err) {
+      sids.push(err);
+    }
   }
   // console.log(param);
   console.log("messsage sent");
