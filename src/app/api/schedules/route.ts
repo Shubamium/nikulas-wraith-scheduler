@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 
   const newSchedule = {
     title: title,
-    url: "https://google.com",
+    url: "https://nikulas-wraith-scheduler.vercel.app/api/send",
     timezone: "America/Chicago",
     method: "GET",
     contentType: "application/json; charset=utf-8",
