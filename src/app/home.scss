@@ -1,0 +1,55 @@
+.scheduler {
+  padding: 10%;
+  max-width: min(900px, 90%);
+  margin: 0 auto;
+
+  .subscribed-list {
+    margin-top: 100px;
+  }
+  .schedule-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+    padding-top: 20px;
+    .btn-sub {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      background: blue;
+      color: white;
+      cursor: pointer;
+      border-radius: 1em;
+      padding: 0.25em;
+      transition: all 150ms ease;
+
+      &:hover {
+        scale: 1.1;
+      }
+      &:active {
+        scale: 0.95;
+      }
+    }
+    .input-field {
+      display: flex;
+      flex-direction: column;
+      label {
+        color: blue;
+        font-size: 1.2rem;
+        padding: 0.25em 0;
+      }
+      textarea {
+        width: 100%;
+        min-height: 200px;
+        font-size: 1.2rem;
+      }
+      textarea,
+      input {
+        padding: 0.55em;
+        border-radius: 0.5em;
+        width: 100%;
+        resize: none;
+      }
+    }
+  }
+}
