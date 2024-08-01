@@ -1,12 +1,13 @@
 import { Twilio } from "twilio";
 
-const sid = process.env.TWILIO_SID;
-const auth = process.env.TWILIO_AUTH;
-
-const client = new Twilio(sid, auth);
-
 export async function GET(request: Request) {
   const param = new URL(request.url);
+
+  const sid = process.env.TWILIO_SID;
+  const auth = process.env.TWILIO_AUTH;
+
+  const client = new Twilio(sid, auth);
+  const message = param.searchParams.get("message");
   // const body = new Payload
   // const data = await request.json();
   // console.log(data);
