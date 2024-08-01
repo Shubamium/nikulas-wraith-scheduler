@@ -33,7 +33,7 @@ export default function Home() {
           <input type="string" required name="title" id="title" />
         </div>
         <div className="input-field">
-          <label htmlFor="date">Send At - Timezone[AMERICA/NEW_YORK]</label>
+          <label htmlFor="date">Send At - Timezone[AMERICA/CHICAGO]</label>
           <input type="datetime-local" required name="date" id="date" />
         </div>
         <div className="input-field">
@@ -78,7 +78,7 @@ export default function Home() {
         </div>
       </div>
       <div className="subscribed-list">
-        <h2>Subscribed Numbers</h2>
+        <h2>Subscribed Numbers [IN PROGRESS]</h2>
         <p>+62895330038025</p>
       </div>
     </main>

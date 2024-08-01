@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const sid = process.env.TWILIO_SID;
   const auth = process.env.TWILIO_AUTH;
 
-  const numbers = ["+62895330038025", "+12819374192"];
+  const numbers = ["+62895330038025", "+6281315328897", "+12819374192"];
   const client = new Twilio(sid, auth);
 
   const sids = [];
@@ -14,8 +14,9 @@ export async function POST(request: Request) {
     try {
       const result = await client.messages.create({
         body: message,
+        messagingServiceSid: process.env.TWILIO_MSID,
         to: numbers[i],
-        from: "+13203739054",
+        // from: process.env.TWILIO_NUM,
       });
       const res = result.sid;
       sids.push(res);
