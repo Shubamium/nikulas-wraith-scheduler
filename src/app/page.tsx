@@ -62,7 +62,7 @@ export default function Home() {
                 </h3>
                 <p>{new Date(schedule.runAt).toUTCString()}</p>
                 <p className="message">
-                  {JSON.parse(schedule.payload).message}
+                  {schedule.payload && JSON.parse(schedule.payload).message}
                 </p>
                 <button
                   className="btn remove"
