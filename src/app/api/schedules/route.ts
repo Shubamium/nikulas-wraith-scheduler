@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     title: title,
     url: "https://nikulas-wraith-scheduler.vercel.app/api/send",
     timezone: "America/Chicago",
-    method: "GET",
+    method: "POST",
     contentType: "application/json; charset=utf-8",
     isRecurring: false,
     runAt: date,

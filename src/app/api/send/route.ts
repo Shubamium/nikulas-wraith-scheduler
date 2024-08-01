@@ -2,27 +2,31 @@ import { Twilio } from "twilio";
 
 export async function POST(request: Request) {
   const payload = await request.json();
-  // const sid = process.env.TWILIO_SID;
-  // const auth = process.env.TWILIO_AUTH;
+  const message = payload.message ?? "Message Unavailble";
+  const sid = process.env.TWILIO_SID;
+  const auth = process.env.TWILIO_AUTH;
 
-  // const numbers = ["+62895330038025"];
-  // const client = new Twilio(sid, auth);
+  const numbers = ["+62895330038025", "+12819374192"];
+  const client = new Twilio(sid, auth);
   // const message = param.searchParams.get("message");
-  const message = payload;
-  console.log(payload);
-  return Response.json(payload);
+  // console.log(payload);
+  // return Response.json(payload);
   // const body = new Payload
-  // const data = await request.json();
+  const data = await request.json();
   // console.log(data);
-  // const result = await client.messages.create({
-  //   body: "hello",
-  //   to: "+62895330038025",
-  //   from: "+13203739054",
-  // });
-  // const res = result.sid;
+  const sids = [];
+  for (let i = 0; i < numbers.length; i++) {
+    const result = await client.messages.create({
+      body: "hello",
+      to: numbers[i],
+      from: "+13203739054",
+    });
+    const res = result.sid;
+    sids.push(res);
+  }
   // console.log(param);
-  // console.log("messsage sent");
-  // return new Response(res, {
-  //   status: 200,
-  // });
+  console.log("messsage sent");
+  return new Response(JSON.stringify({ sids }), {
+    status: 200,
+  });
 }
