@@ -8,16 +8,11 @@ export async function POST(request: Request) {
 
   const numbers = ["+62895330038025", "+12819374192"];
   const client = new Twilio(sid, auth);
-  // const message = param.searchParams.get("message");
-  // console.log(payload);
-  // return Response.json(payload);
-  // const body = new Payload
-  const data = await request.json();
-  // console.log(data);
+
   const sids = [];
   for (let i = 0; i < numbers.length; i++) {
     const result = await client.messages.create({
-      body: "hello",
+      body: message,
       to: numbers[i],
       from: "+13203739054",
     });
