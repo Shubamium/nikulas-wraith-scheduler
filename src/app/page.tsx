@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import "./home.scss";
 import { useRouter } from "next/navigation";
+import { fetchData } from "./db/client";
 export default function Home() {
   const [activeSchedules, setActiveSchedules] = useState<any[]>([]);
+  const [registeredNumbers, setRegisteredNumbers] = useState<string[]>([]);
   const router = useRouter();
   const [changes, setChanges] = useState(true);
   const fetchScheduleList = async () => {
@@ -12,7 +14,17 @@ export default function Home() {
     console.log(req);
     setActiveSchedules(req.items);
   };
-
+  const fetchNumbers = async () => {
+    const data = await fetchData<any>(`
+			*[_type == 'alerts' && preset == 'main'][0]{
+			...
+			}
+		`);
+    console.log(data);
+    if (data) {
+      setRegisteredNumbers(data?.numbers ?? []);
+    }
+  };
   const removeAlert = async (id: string) => {
     const res = await fetch("/api/schedules?id=" + id, {
       method: "DELETE",
@@ -22,6 +34,7 @@ export default function Home() {
   };
   useEffect(() => {
     fetchScheduleList();
+    fetchNumbers();
   }, []);
   return (
     <main className={"scheduler"}>
@@ -78,8 +91,12 @@ export default function Home() {
         </div>
       </div>
       <div className="subscribed-list">
-        <h2>Subscribed Numbers [IN PROGRESS]</h2>
-        <p>+62895330038025</p>
+        <h2>Subscribed Numbers</h2>
+        <div className="numbers">
+          {registeredNumbers.map((num: string) => {
+            return <p key={num}>{num}</p>;
+          })}
+        </div>
       </div>
     </main>
   );

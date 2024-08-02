@@ -5,6 +5,17 @@
 
   .subscribed-list {
     margin-top: 100px;
+    .numbers {
+      padding: 0.25em;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      p {
+        background: rgb(230, 230, 251);
+        padding: 1em;
+        font-size: 1.3rem;
+      }
+    }
   }
   .schedule-form {
     display: flex;
