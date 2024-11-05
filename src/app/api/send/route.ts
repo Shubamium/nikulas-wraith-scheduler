@@ -2,7 +2,7 @@ import { sendNotification } from "@/app/db/client";
 
 export async function POST(request: Request) {
   const payload = await request.json();
-  const title = payload.title ?? "No title provided";
+  const title = payload.croonhook?.Title ?? "No title provided";
   const message = payload.message ?? "Message Unavailble";
   try {
     console.log(payload);
