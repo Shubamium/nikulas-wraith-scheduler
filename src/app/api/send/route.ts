@@ -6,7 +6,9 @@ export async function POST(request: Request) {
   const message = payload.message ?? "Message Unavailble";
 
   sendNotification(title, message);
-  return {};
+  return new Response(
+    JSON.stringify({ message: "Notification has been sent" })
+  );
 }
 
 // Deprecated
