@@ -4,8 +4,12 @@ export async function POST(request: Request) {
   const payload = await request.json();
   const title = payload.title ?? "No title provided";
   const message = payload.message ?? "Message Unavailble";
-
-  sendNotification(title, message);
+  try {
+    console.log(payload);
+    await sendNotification(title, message);
+  } catch (err) {
+    console.error(err);
+  }
   return new Response(
     JSON.stringify({ message: "Notification has been sent" })
   );
