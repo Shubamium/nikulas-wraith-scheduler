@@ -1,5 +1,3 @@
-import { redirect } from "next/dist/server/api-utils";
-
 export async function GET(request: Request) {
   try {
     const res = await fetch(
@@ -57,6 +55,7 @@ export async function POST(request: Request) {
   //   status: 200,
   // });
 }
+
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
 

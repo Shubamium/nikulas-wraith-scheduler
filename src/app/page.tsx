@@ -1,30 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
 import "./home.scss";
-import { useRouter } from "next/navigation";
-import { fetchData } from "./db/client";
+import { sendNotification } from "./db/client";
+
 export default function Home() {
   const [activeSchedules, setActiveSchedules] = useState<any[]>([]);
-  const [registeredNumbers, setRegisteredNumbers] = useState<string[]>([]);
-  const router = useRouter();
-  const [changes, setChanges] = useState(true);
+
+  const [title, setTitle] = useState("");
+  const [messages, setMessages] = useState("");
+
   const fetchScheduleList = async () => {
     const res = await fetch("/api/schedules");
     const req = await res.json();
     console.log(req);
     setActiveSchedules(req.items);
   };
-  const fetchNumbers = async () => {
-    const data = await fetchData<any>(`
-			*[_type == 'alerts' && preset == 'main'][0]{
-			...
-			}
-		`);
-    console.log(data);
-    if (data) {
-      setRegisteredNumbers(data?.numbers ?? []);
-    }
-  };
+
   const removeAlert = async (id: string) => {
     const res = await fetch("/api/schedules?id=" + id, {
       method: "DELETE",
@@ -32,10 +23,19 @@ export default function Home() {
     const filtered = activeSchedules.filter((x) => x.id !== id);
     setActiveSchedules(filtered);
   };
+
   useEffect(() => {
     fetchScheduleList();
-    fetchNumbers();
   }, []);
+
+  const sendDirect = () => {
+    if (messages === "" && title === "") {
+      alert("Please fill out the title and message");
+      return;
+    }
+    sendNotification(title, messages);
+  };
+
   return (
     <main className={"scheduler"}>
       <h1>Alert Scheduler</h1>
@@ -43,7 +43,14 @@ export default function Home() {
       <form action="/api/schedules" method="POST" className="schedule-form">
         <div className="input-field">
           <label htmlFor="title">Alert Title</label>
-          <input type="string" required name="title" id="title" />
+          <input
+            type="string"
+            required
+            name="title"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
         <div className="input-field">
           <label htmlFor="date">Send At - Timezone[AMERICA/CHICAGO]</label>
@@ -51,10 +58,24 @@ export default function Home() {
         </div>
         <div className="input-field">
           <label htmlFor="date">Alert Messages:</label>
-          <textarea name="message" required id="message"></textarea>
+          <textarea
+            name="message"
+            required
+            id="message"
+            value={messages}
+            onChange={(e) => setMessages(e.target.value)}
+          ></textarea>
         </div>
-        <button type="submit" className="btn-sub">
+        <button
+          type="submit"
+          className="btn-sub"
+          name={"sched"}
+          value={"schedule"}
+        >
           Schedule
+        </button>
+        <button className="btn-sub" type="button" onClick={sendDirect}>
+          Send Alert Directly
         </button>
       </form>
       <div className="active-sched">
@@ -90,14 +111,15 @@ export default function Home() {
           })}
         </div>
       </div>
-      <div className="subscribed-list">
-        <h2>Subscribed Numbers</h2>
-        <div className="numbers">
-          {registeredNumbers.map((num: string) => {
-            return <p key={num}>{num}</p>;
-          })}
-        </div>
-      </div>
     </main>
   );
 }
+
+//  {/* <div className="subscribed-list">
+//         <h2>Subscribed Numbers</h2>
+//         <div className="numbers">
+//           {registeredNumbers.map((num: string) => {
+//             return <p key={num}>{num}</p>;
+//           })}
+//         </div>
+//       </div> */}
